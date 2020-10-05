@@ -13,7 +13,7 @@ export default class HandleEvent extends Component {
     return (
       <div>
         <div class="btn-group">
-          {/* Xu ly su ien truyen callback */}
+          {/* Xu ly su kien truyen callback */}
           <button
             type="button"
             class="btn btn-primary"
