@@ -4,7 +4,13 @@ import CardItem from "./CardItem";
 export default class Model extends Component {
   renderCardList = () => {
     return this.props.cardList.map((card, index) => {
-      return <CardItem key={index} card={card} />;
+      return (
+        <CardItem
+          key={index}
+          card={card}
+          tangGiamSoLuong={this.props.tangGiamSoLuong}
+        />
+      );
     });
   };
 
@@ -36,15 +42,16 @@ export default class Model extends Component {
               </button>
             </div>
             <div className="modal-body">
-              <table className="table">
+              <table className="table table-bordered">
                 <thead>
                   <tr>
                     <th>Mã sản phẩm</th>
-                    <th>tên sản phẩm</th>
-                    <th>hình ảnh</th>
-                    <th>số lượng</th>
-                    <th>đơn giá</th>
-                    <th>thành tiền</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Hình ảnh</th>
+                    <th>Số lượng</th>
+                    <th>Đơn giá</th>
+                    <th>Thành tiền</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody />

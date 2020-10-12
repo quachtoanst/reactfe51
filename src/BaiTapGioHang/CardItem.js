@@ -2,21 +2,45 @@ import React, { Component } from "react";
 
 export default class CardItem extends Component {
   render() {
-    const { maSP, tenSP, hinhAnh, soLuong, giaBan } = this.props.card;
+    const { card, tangGiamSoLuong } = this.props;
     return (
       <tr className="card-item">
-        <td>{maSP}</td>
-        <td>{tenSP}</td>
+        <td>{card.maSP}</td>
+        <td>{card.tenSP}</td>
         <td>
-          <img src={hinhAnh} width={50} alt="" />
+          <img src={card.hinhAnh} width={50} alt="" />
         </td>
         <td>
-          <button>-</button>2<button>+</button>
+          <div class="btn-group mr-2" role="group" aria-label="First group">
+            <button
+              type="button"
+              className="btn btn-danger"
+              onClick={() => {
+                tangGiamSoLuong(card.maSP, false);
+              }}
+            >
+              -
+            </button>
+            {/* <input type="text" className="form-control"> */}
+            {card.soLuong}
+            {/* </input> */}
+            <button
+              type="button"
+              className="btn btn-success"
+              onClick={() => {
+                tangGiamSoLuong(card.maSP, true);
+              }}
+            >
+              +
+            </button>
+          </div>
         </td>
-        <td>{soLuong}</td>
-        <td>{giaBan}</td>
+        <td>{card.giaBan}</td>
+        <td>{card.giaBan * card.soLuong}</td>
         <td>
-          <button className="btn btn-danger">Delete</button>
+          <button className="btn btn-danger" xuLyNutDelCard>
+            Delete
+          </button>
         </td>
       </tr>
     );

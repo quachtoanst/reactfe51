@@ -23,9 +23,9 @@ export default class BaiTapGioHang extends Component {
 
   handleCardList = (sanPham) => {
     // tim vi tri
-    const index = this.state.cardList.findIndex((card) => {
-      return card.maSP === sanPham.maSP;
-    });
+    const index = this.state.cardList.findIndex(
+      (card) => card.maSP === sanPham.maSP
+    );
     let cardList = [...this.state.cardList];
     if (index !== -1) {
       // tim thay => tang so luong
@@ -60,6 +60,30 @@ export default class BaiTapGioHang extends Component {
     });
   };
 
+  tangGiamSoLuong = (maSP, tangGiam) => {
+    //tim ra san pha bam nut + /-
+    console.log("maSP", maSP);
+    console.log("tangGiam", tangGiam);
+    let gioHangUpdate = [...this.state.cardList];
+    // tim san pham trong gio hang;
+
+    let spGH = gioHangUpdate.find((sp) => sp.maSP === maSP);
+
+    if (spGH) {
+      //tim ra san pham !undefinde
+      if (tangGiam) {
+        spGH.soLuong += 1;
+      } else {
+        if (spGH.soLuong > 1) {
+          spGH.soLuong -= 1;
+        }
+      }
+    }
+    this.setState({
+      cardList: gioHangUpdate,
+    });
+  };
+
   render() {
     return (
       <div>
@@ -67,7 +91,7 @@ export default class BaiTapGioHang extends Component {
           <h3 className="title text-center">Bài tập giỏ hàng</h3>
           <div className="container text-center my-2">
             <button
-              className="btn btn-danger "
+              className="btn btn-danger"
               data-toggle="modal"
               data-target="#modelId"
             >
@@ -77,7 +101,10 @@ export default class BaiTapGioHang extends Component {
           <div className="container danh-sach-san-pham">
             <div className="row">{this.renderDanhSachSanPham()}</div>
           </div>
-          <Model cardList={this.state.cardList} />
+          <Model
+            cardList={this.state.cardList}
+            tangGiamSoLuong={this.tangGiamSoLuong}
+          />
           <div className="row">
             <div className="col-sm-5">
               <img
