@@ -1,5 +1,9 @@
 b1. Xay dung giao dien;
-b2 xac dinh nguon du lieu thay doi;
+b2 xac dinh nguon du lieu thay doi; (state). Tổ chức lưu trữ
+    + biến tài xỉu : string
     + mangXucXac [
-        {so:1, hinhAnh}
+        {
+            ma: '',
+            hinhAnh: ''
+        }
     ];
