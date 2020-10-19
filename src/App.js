@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.css";
+import DanhSachNguoiDung from "./FormComponent/DanhSachNguoiDung";
 // import BaiTapGioHang from "./BaiTapGioHang";
 // import BaiTapGioHangRedux from "./BaiTapGioHangRedux/BaiTapGioHangRedux";
 //import DemoListAndKey from "./DemoListAndKey";
@@ -9,7 +10,8 @@ import "./App.css";
 // import Databinding from './Databinding/Databinding';
 // import DemoConditionalAndState from './DemoLogin/DemoConditionalAndState';
 // import HandleEvent from "./HandleEvent/HandleEvent";
-import BaiTapGameXucXac from "./BaiTapGameXucXac/BaiTapGameXucXac";
+// import BaiTapGameXucXac from "./BaiTapGameXucXac/BaiTapGameXucXac";
+// import LifeCycle from "./LifeCycle/LifeCycle";
 
 function App() {
   return (
@@ -24,7 +26,9 @@ function App() {
       {/* <DemoProps /> */}
       {/* <BaiTapGioHang /> */}
       {/* <BaiTapGioHangRedux /> */}
-      <BaiTapGameXucXac/>
+      {/* <BaiTapGameXucXac/> */}
+      {/* <LifeCycle /> */}
+      <DanhSachNguoiDung />
     </div>
   );
 }
