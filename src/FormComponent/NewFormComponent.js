@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import swal from "sweetalert2";
 import { XOA_NGUOI_DUNG } from "../redux/constants/QuanLyNguoiDungConst";
 
-class FormComponent extends Component {
+class NewFormComponent extends Component {
   state = {
     values: {
       maNguoiDung: "",
@@ -27,12 +27,12 @@ class FormComponent extends Component {
     // Lấy ra attribute types (các thuộc tính rên thẻ tự thêm gọi là attribute)
     let types = event.target.getAttribute("types");
 
-    let newValues = { ...this.state.values }; //Tao ra value moi gia tri = value cu
+    let newValues = { ...this.props.stateForm.values }; //Tao ra value moi gia tri = value cu
     newValues[name] = value;
 
     //Xử lý error
 
-    let newErrors = { ...this.state.errors };
+    let newErrors = { ...this.props.stateForm.errors };
 
     newErrors[name] = value.trim() === "" ? "Không được bỏ trống" : "";
 
@@ -52,7 +52,6 @@ class FormComponent extends Component {
           newErrors[name] = "Email không hợp lệ!";
         }
         break;
-
       default:
         break;
     }
@@ -62,7 +61,7 @@ class FormComponent extends Component {
     //     [name]: value,
     //   },
     //   () => {
-    //     console.log(this.state);
+    //     console.log(this.props.stateForm);
     //   }
     // );
     this.setState(
@@ -71,11 +70,19 @@ class FormComponent extends Component {
         errors: newErrors, //Gan value = value moi
       },
       () => {
-        console.log(this.state);
+        console.log(this.props.stateForm);
       }
     );
-  };
 
+    let action = {
+      type: "HANDLE_CHANGE_INPUT",
+      newState: {
+        values: newValues, //Gan value = value moi,
+        errors: newErrors,
+      },
+    };
+    this.props.dispatch(action);
+  };
   render() {
     //Lấy giá trị từ QuanLyNguoiDungReducer,nguoiDungChinhSua về render lên các value
     // console.log(this.props.nguoiDungChinhSua);
@@ -84,8 +91,8 @@ class FormComponent extends Component {
       tenNguoiDung,
       soDienThoai,
       email,
-    } = this.props.nguoiDungChinhSua;
-    console.log(this.props.nguoiDungChinhSua);
+    } = this.props.stateForm;
+
     return (
       <form
         className="card"
@@ -94,21 +101,21 @@ class FormComponent extends Component {
           let valid = true;
 
           // for in Duyet thuoc tinh tren object
-          for (let tenThuocTinh in this.state.values) {
-            if (this.state.values[tenThuocTinh].trim() === "") {
+          for (let tenThuocTinh in this.props.stateForm.values) {
+            if (this.props.stateForm.values[tenThuocTinh].trim() === "") {
               valid = false;
             }
           }
-          for (let tenThuocTinh in this.state.errors) {
-            if (this.state.values[tenThuocTinh].trim() !== "") {
+          for (let tenThuocTinh in this.props.stateForm.errors) {
+            if (this.props.stateForm.values[tenThuocTinh].trim() !== "") {
               valid = false;
             }
           }
           console.log("valid: ", valid);
-          // if (!valid) {
-          //   swal.fire("Thông báo", "Dữ liệu không hợp lệ", "error");
-          //   return;
-          // }
+          if (!valid) {
+            swal.fire("Thông báo", "Dữ liệu không hợp lệ", "error");
+            return;
+          }
           swal.fire("Thông báo", "Thêm người dùng thành công", "success");
           console.log("submit");
         }}
@@ -126,7 +133,7 @@ class FormComponent extends Component {
                   onChange={this.handleChangeInput}
                 ></input>
                 <div className="text-danger">
-                  {this.state.errors.maNguoiDung}
+                  {this.props.stateForm.errors.maNguoiDung}
                 </div>
               </div>
               <div className="form-group">
@@ -138,7 +145,7 @@ class FormComponent extends Component {
                   onChange={this.handleChangeInput}
                 ></input>
                 <div className="text-danger">
-                  {this.state.errors.tenNguoiDung}
+                  {this.props.stateForm.errors.tenNguoiDung}
                 </div>
               </div>
             </div>
@@ -153,7 +160,7 @@ class FormComponent extends Component {
                   onChange={this.handleChangeInput}
                 ></input>
                 <div className="text-danger">
-                  {this.state.errors.soDienThoai}
+                  {this.props.stateForm.errors.soDienThoai}
                 </div>
               </div>
               <div className="form-group">
@@ -165,7 +172,9 @@ class FormComponent extends Component {
                   name="email"
                   onChange={this.handleChangeInput}
                 ></input>
-                <div className="text-danger">{this.state.errors.email}</div>
+                <div className="text-danger">
+                  {this.props.stateForm.errors.email}
+                </div>
               </div>
             </div>
             <div className="col-12 text-right">
@@ -188,7 +197,7 @@ class FormComponent extends Component {
                   //dispath ma nguoi dung len reducer
                   let action = {
                     type: XOA_NGUOI_DUNG,
-                    maNguoiDung: this.state.maNguoiDungXoa,
+                    maNguoiDung: this.props.stateForm.maNguoiDungXoa,
                   };
                   this.props.dispatch(action);
                 }}
@@ -201,13 +210,14 @@ class FormComponent extends Component {
       </form>
     );
   }
+  //Viết hàm lấy state nguoiDungChinhSua từ render về component lad lên các thẻ input
 }
 
-//Viết hàm lấy state nguoiDungChinhSua từ render về component lad lên các thẻ input
 const mapStateToProps = (state) => {
   return {
     nguoiDungChinhSua: state.QuanLyNguoiDungReducer.nguoiDungChinhSua,
+    stateForm: state.QuanLyNguoiDungReducer.stateForm, //lay state form tu redux ve => binding len ham render
   };
 };
 
-export default connect(mapStateToProps)(FormComponent);
+export default connect(mapStateToProps)(NewFormComponent);

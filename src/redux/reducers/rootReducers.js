@@ -3,6 +3,7 @@ import { combineReducers } from "redux";
 
 import BaiTapGioHangReducer from "./BaiTapGioHangReducer";
 import BaiTapGameXucXacReducer from "./BaiTapGameXucXacReducer";
+import { QuanLyNguoiDungReducer } from "./QuanLyNguoiDungReducer";
 
 //state tong cua ung dung
 
@@ -10,4 +11,5 @@ export const rootReducer = combineReducers({
   //Noi khai bao cac state theo tung nghiep vu
   StateBaiTapGioHang: BaiTapGioHangReducer,
   stateBaiTapGameXucXac: BaiTapGameXucXacReducer,
+  QuanLyNguoiDungReducer,
 });
